@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+{% block title %}View{% endblock title %}
+
+{% block body %}
+
+<div class="position-absolute mt-5 my-5 top-50 start-50 translate-middle">
+  <div class="card" style="width: auto; min-width: 300px;">
+    <div class="card-body mx-auto">
+      <h1 class="card-title">{{data.title}}</h1>
+      <p class="card-text" style="font-size: 20px;">{{data.textarea}}</p>
+      <a data-bs-toggle="modal" data-bs-target="#update-modal" class="btn btn-primary">Update</a>
+      <a data-bs-toggle="modal" data-bs-target="#delete-modal" class="btn btn-primary">delete</a>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+  {% comment %} delete note confirmation {% endcomment %}
+  <div class="modal fade" id="delete-modal" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <form action="{%url 'delete_note' data.id %}" method="post">
+          <div class="modal-header">
+            <h5 class="modal-title">Delete Note</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <p>Are you sure you want to delete note?</p>
+            {% csrf_token %}
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            <button type="submit" class="btn btn-primary">Delete</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+
+  {% comment %} update notes {% endcomment %}
+  <div class="modal fade" id="update-modal" tabindex="-1" aria-labelledby="exampleModalLabel"    aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">
+            Update Note
+          </h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form action="{%url 'update_note' data.id %}" method='POST'>
+            <div class="mb-3">
+              <label for="exampleFormControlInput1" class="form-label">Title</label>
+              <input type="text" class="form-control" name="title" id="exampleFormControlInput1"
+                placeholder="Write Your Title Here" value="{{data.title}}">
+            </div>
+            {% csrf_token %}
+            <div class="mb-3">
+              <label for="exampleFormControlTextarea1" class="form-label">Make Notes</label>
+              <textarea type="textarea" class="form-control" name="note" id="exampleFormControlTextarea1" rows="4"
+                required>{{data.textarea}}</textarea>
+            </div>
+            <div class="modal-footer">
+              <button type="submit" class="btn btn-primary">Save</button>
+            </div>
+          </form>
+        </div>
+
+
+      </div>
+    </div>
+
+  {% endblock body %}

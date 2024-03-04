@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block title %}Home{% endblock title %}
+{% block body %}
+
+{% if user.is_authenticated %}
+{% if notes %}
+
+<div class="row   row-cols-auto my-3 mx-5">
+    {% for note in notes %}
+    <div class="col-md-4 my-4 ">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">{{note.title | slice:15}}</h5>
+          <p class="card-text">{{note.textarea | slice:25}}....</p>
+          <a href="{%url 'detailView' note.id %}" class="btn btn-primary">View</a>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+</div>
+
+{% else %}
+<div class="containter">
+  <div class="position-absolute top-50 start-50 translate-middle">
+  <h1>Start Adding Your Notes</h1>
+</div>
+
+</div>
+
+
+
+
+{% endif %}
+{% else %}
+
+<div class="containter mx-5 mt-5 bg-warning">
+   <div class="jumbotron p-5">   
+    <h1 class="display-4">Hello,Notyyy's</h1>
+    <p class="lead">
+        This will help you to make your notes
+    </p>
+    <hr class="my-2">
+    <p>Login to start adding your notes</p>
+      <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#login-modal" type="button">Login</a>
+  </div>
+</div>
+
+
+
+
+{% endif %}
+{% endblock body %}
